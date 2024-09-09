@@ -1,16 +1,18 @@
 mutation {
-  createUser(createUserInput: { name: "John Doe", email: "john@example.com" }) {
+  createUser(createUserInput: { id: 1, name: "John Doe", email: "john@example.com", age: 20, isActive: true }) {
     id
-    name
     email
+    age
+    isActive
   }
 }
 
 mutation {
-  updateUser(updateUserInput: { id: 1, name: "John Updated", email: "updated@example.com" }) {
+  updateUser(updateUserInput: { id: 1, email: "updated@example.com", isActive: false}) {
     id
-    name
     email
+    age
+    isActive
   }
 }
 
@@ -21,15 +23,17 @@ mutation {
 query {
   users {
     id
-    name
     email
+    age
+    isActive
   }
 }
 
 query {
   user(id: 1) {
     id
-    name
     email
+    age
+    isActive
   }
 }

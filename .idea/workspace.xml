@@ -35,6 +35,11 @@
     "nodejs_package_manager_path": "npm",
     "ts.external.directory.path": "D:\\NestJS\\my-nest-app\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -67,6 +72,7 @@
       <workItem from="1725879433287" duration="450000" />
       <workItem from="1725879934728" duration="98000" />
       <workItem from="1725880322619" duration="170000" />
+      <workItem from="1725880512085" duration="6016000" />
     </task>
     <task id="LOCAL-00001" summary="Nest.js with graphQL">
       <option name="closed" value="true" />
