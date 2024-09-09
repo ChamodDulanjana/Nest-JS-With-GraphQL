@@ -1,0 +1,35 @@
+mutation {
+  createUser(createUserInput: { name: "John Doe", email: "john@example.com" }) {
+    id
+    name
+    email
+  }
+}
+
+mutation {
+  updateUser(updateUserInput: { id: 1, name: "John Updated", email: "updated@example.com" }) {
+    id
+    name
+    email
+  }
+}
+
+mutation {
+  removeUser(id: 1)
+}
+
+query {
+  users {
+    id
+    name
+    email
+  }
+}
+
+query {
+  user(id: 1) {
+    id
+    name
+    email
+  }
+}
