@@ -2,35 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  private userList: User[] = [];
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
-  create(createUserInput: CreateUserInput) : User {
-    this.userList.push(createUserInput);
-    console.log(this.userList);
-    return createUserInput;
+  create(createUserInput: CreateUserInput): Promise<User> {
+    const user = this.userRepository.create(createUserInput);
+    return this.userRepository.save(user);
   }
 
-  findAll() : User[]{
-    return this.userList;
+  findAll(): Promise<User[]> {
+    console.log('Find All Service');
+    console.log(this.userRepository.find());
+    return this.userRepository.find();
   }
 
-  findOne(id: number): User {
-    return this.userList.find(user => user.id === id);
+  findOne(id: number): Promise<User> {
+    return this.userRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) : User{
-    const user = this.userList.find(user => user.id === id);
-    Object.assign(user, updateUserInput);
-    return user;
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+    await this.userRepository.update(id, updateUserInput);
+    return this.findOne(id);
   }
 
-  remove(id: number) : User{
-    const userIndex = this.userList.findIndex(user => user.id === id);
-    const user = this.userList.find(user => user.id === id);
-    this.userList.splice(userIndex, 1);
-    return user;
+  async remove(id: number): Promise<boolean> {
+    const result = await this.userRepository.delete(id);
+    return result.affected ? true : false;
   }
 }

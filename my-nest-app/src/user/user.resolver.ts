@@ -9,27 +9,34 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) : User{
-    return this.userService.create(createUserInput);
+  async createUser(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<User> {
+    return await this.userService.create(createUserInput);
   }
 
   @Query(() => [User], { name: 'user' })
-  findAll() : User[]{
-    return this.userService.findAll();
+  async users(): Promise<User[]> {
+    console.log('Find All Resolver');
+    return await this.userService.findAll();
   }
 
   @Query(() => User, { name: 'user', nullable: true })
-  findOne(@Args('id', { type: () => Int }) id: number) : CreateUserInput{
-    return this.userService.findOne(id);
+  async user(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return await this.userService.findOne(id);
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) : User{
-    return this.userService.update(updateUserInput.id, updateUserInput);
+  async updateUser(
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ): Promise<User> {
+    return await this.userService.update(updateUserInput.id, updateUserInput);
   }
 
-  @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) : User{
-    return this.userService.remove(id);
+  @Mutation(() => Boolean)
+  async removeUser(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<boolean> {
+    return await this.userService.remove(id);
   }
 }
